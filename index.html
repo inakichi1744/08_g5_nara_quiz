@@ -445,6 +445,18 @@ const ALL_QUESTIONS = [
   },
 ];
 
+// 前の問題の答えが次の問題文に出てくる問題などは、まとめて決まった順番で出す（まとまり同士・その他はランダム）
+const ORDER_GROUPS = [[1, 2], [4, 5], [7, 8], [9, 10], [13, 14]];
+function orderQuestions(list){
+  const byId={}; list.forEach(q=>byId[q.id]=q);
+  const used=new Set(); const units=[];
+  ORDER_GROUPS.forEach(g=>{const u=g.map(id=>byId[id]).filter(Boolean); u.forEach(q=>used.add(q.id)); if(u.length) units.push(u);});
+  list.forEach(q=>{ if(!used.has(q.id)) units.push([q]); });
+  for(let i=units.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1)); [units[i],units[j]]=[units[j],units[i]];}
+  return units.flat();
+}
+
+
 
 let exp=0, currentLevel=1, earnedTitles=[];
 let questions=[], currentIndex=0, correctCount=0, wrongCount=0, answered=false, results=[];
@@ -502,7 +514,7 @@ function startQuiz(questionSet){
   } else {
     // 問16・17・18は必ず最後に連続して出題、それ以外はランダム
     const q161718=ALL_QUESTIONS.filter(q=>q.id===16||q.id===17||q.id===18);
-    const others=ALL_QUESTIONS.filter(q=>q.id!==16&&q.id!==17&&q.id!==18).sort(()=>Math.random()-0.5);
+    const others=orderQuestions(ALL_QUESTIONS.filter(q=>q.id!==16&&q.id!==17&&q.id!==18));
     questions=[...others,...q161718];
   }
   currentIndex=0; correctCount=0; wrongCount=0; results=[]; answered=false; exp=0;
