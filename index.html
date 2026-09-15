@@ -146,6 +146,7 @@ body::before { content: ""; position: fixed; inset: 0; background: radial-gradie
 .qa-popup-close{margin-top:16px;width:100%;padding:10px;background:linear-gradient(135deg,var(--primary-dark),var(--primary-light));color:#fff;border:none;border-radius:6px;font-weight:700;cursor:pointer;font-family:inherit;}
 .result-table td.q-cell{cursor:pointer;color:var(--primary-dark);text-decoration:underline dotted;}
 .exp-col-btn{font-size:0.74rem;padding:3px 10px;border:1.5px solid var(--gold-dark);border-radius:999px;background:#fffde7;color:#a07020;cursor:pointer;font-family:inherit;font-weight:700;white-space:nowrap;}
+.itag{word-break:keep-all;overflow-wrap:anywhere;} /* itag-nobreak */
 </style>
 </head>
 <body>
@@ -176,11 +177,10 @@ body::before { content: ""; position: fixed; inset: 0; background: radial-gradie
   <div class="intro-sub">4月の演習から出題！</div>
   <div class="intro-card">
     <div class="intro-tags">
-      <span class="itag itag-full" id="q-count-tag">🎯 全18問</span>
       <span class="itag">平城京</span>
       <span class="itag">木簡</span>
       <span class="itag">東大寺の大仏</span>
-      <span class="itag">遣唐使・鑑真</span>
+      <span class="itag">遣唐使・<wbr>鑑真</span>
       <span class="itag">正倉院</span>
       <span class="itag">歴史書</span>
     </div>
@@ -444,7 +444,6 @@ const ALL_QUESTIONS = [
   },
 ];
 
-document.getElementById("q-count-tag").textContent = "🎯 全"+ALL_QUESTIONS.length+"問";
 
 let exp=0, currentLevel=1, earnedTitles=[];
 let questions=[], currentIndex=0, correctCount=0, wrongCount=0, answered=false, results=[];
