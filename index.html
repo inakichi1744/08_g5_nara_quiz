@@ -514,7 +514,7 @@ function startQuiz(questionSet){
   } else {
     // 問16・17・18は必ず最後に連続して出題、それ以外はランダム
     const q161718=ALL_QUESTIONS.filter(q=>q.id===16||q.id===17||q.id===18);
-    const others=orderQuestions(ALL_QUESTIONS.filter(q=>q.id!==16&&q.id!==17&&q.id!==18));
+    const others=ALL_QUESTIONS.filter(q=>q.id!==16&&q.id!==17&&q.id!==18);
     questions=[...others,...q161718];
   }
   currentIndex=0; correctCount=0; wrongCount=0; results=[]; answered=false; exp=0;
